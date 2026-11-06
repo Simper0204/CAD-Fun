@@ -1,0 +1,314 @@
+openapi: 3.1.0
+info:
+  title: CAD Fun API
+  version: 1.0.0
+  description: >
+    Draft API contract for CAD Fun Version 1. The specification defines
+    assessment submission and response. Moment of inertia remains provisional
+    and must not be implemented until its physical definition is approved.
+
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+
+paths:
+  /api/v1/assessments:
+    post:
+      operationId: submitAssessment
+      summary: Submit CAD model parameters for assessment
+      description: >
+        The frontend submits model parameters. The backend validates them,
+        compares them with the question's expected values, calculates scores,
+        and returns the assessment.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssessmentSubmission'
+            examples:
+              example:
+                summary: Example CAD submission
+                value:
+                  question_id: CAD001
+                  parameters:
+                    volume: 125.5
+                    surface_area: 80.2
+                    center_of_mass: [10.0, 20.0, 30.0]
+                    bounding_box: [10.0, 20.0, 30.0]
+                    moment_of_inertia: 1.0
+                    number_of_solid_bodies: 1
+                    number_of_solid_faces: 6
+                    number_of_edges: 12
+                    face_types:
+                      plane: 6
+      responses:
+        '200':
+          description: Assessment completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessmentResponse'
+              examples:
+                example:
+                  summary: Example assessment response
+                  value:
+                    question_id: CAD001
+                    assessment:
+                      volume:
+                        error: 1.0
+                        score: 95.0
+                      surface_area:
+                        error: 2.0
+                        score: 90.0
+                      center_of_mass:
+                        error: [1.0, 2.0, 3.0]
+                        score: 85.0
+                      bounding_box:
+                        error: [1.0, 2.0, 3.0]
+                        score: 90.0
+                      moment_of_inertia:
+                        error: 1.0
+                        score: 95.0
+                      number_of_solid_bodies:
+                        error: 0
+                        score: 100.0
+                      number_of_solid_faces:
+                        error: 0
+                        score: 100.0
+                      number_of_edges:
+                        error: 0
+                        score: 100.0
+                      face_types:
+                        error:
+                          plane: 0
+                        score: 100.0
+                    overall_score: 94.0
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Question ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Request failed schema or semantic validation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    AssessmentSubmission:
+      type: object
+      additionalProperties: false
+      required:
+        - question_id
+        - parameters
+      properties:
+        question_id:
+          type: string
+          minLength: 1
+          example: CAD001
+        parameters:
+          $ref: '#/components/schemas/SubmittedParameters'
+
+    SubmittedParameters:
+      type: object
+      additionalProperties: false
+      required:
+        - volume
+        - surface_area
+        - center_of_mass
+        - bounding_box
+        - moment_of_inertia
+        - number_of_solid_bodies
+        - number_of_solid_faces
+        - number_of_edges
+        - face_types
+      properties:
+        volume:
+          type: number
+          minimum: 0
+          description: Volume in mm^3.
+        surface_area:
+          type: number
+          minimum: 0
+          description: Surface area in mm^2.
+        center_of_mass:
+          $ref: '#/components/schemas/Vector3'
+          description: X, Y, Z coordinates in mm in the question-defined coordinate frame.
+        bounding_box:
+          $ref: '#/components/schemas/Vector3'
+          description: X, Y, Z bounding-box dimensions in mm, in the question-defined axis order.
+        moment_of_inertia:
+          type: number
+          description: >
+            PROVISIONAL PLACEHOLDER. Do not implement or interpret until the
+            project lead approves the physical definition, reference point,
+            axes, units, density assumptions, and representation.
+        number_of_solid_bodies:
+          type: integer
+          minimum: 0
+        number_of_solid_faces:
+          type: integer
+          minimum: 0
+        number_of_edges:
+          type: integer
+          minimum: 0
+        face_types:
+          type: object
+          description: >
+            Counts by geometric surface type. Initial keys include plane,
+            cylinder, cone, sphere, torus, and other.
+          propertyNames:
+            enum: [plane, cylinder, cone, sphere, torus, other]
+          additionalProperties:
+            type: integer
+            minimum: 0
+
+    Vector3:
+      type: array
+      minItems: 3
+      maxItems: 3
+      items:
+        type: number
+      description: Three numeric components ordered X, Y, Z.
+
+    AssessmentResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - question_id
+        - assessment
+        - overall_score
+      properties:
+        question_id:
+          type: string
+        assessment:
+          $ref: '#/components/schemas/AssessmentBreakdown'
+        overall_score:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Weighted overall score on a 0–100 scale.
+
+    AssessmentBreakdown:
+      type: object
+      additionalProperties: false
+      required:
+        - volume
+        - surface_area
+        - center_of_mass
+        - bounding_box
+        - moment_of_inertia
+        - number_of_solid_bodies
+        - number_of_solid_faces
+        - number_of_edges
+        - face_types
+      properties:
+        volume:
+          $ref: '#/components/schemas/ScalarAssessment'
+        surface_area:
+          $ref: '#/components/schemas/ScalarAssessment'
+        center_of_mass:
+          $ref: '#/components/schemas/VectorAssessment'
+        bounding_box:
+          $ref: '#/components/schemas/VectorAssessment'
+        moment_of_inertia:
+          $ref: '#/components/schemas/ScalarAssessment'
+        number_of_solid_bodies:
+          $ref: '#/components/schemas/CountAssessment'
+        number_of_solid_faces:
+          $ref: '#/components/schemas/CountAssessment'
+        number_of_edges:
+          $ref: '#/components/schemas/CountAssessment'
+        face_types:
+          $ref: '#/components/schemas/FaceTypesAssessment'
+
+    ScalarAssessment:
+      type: object
+      additionalProperties: false
+      required: [error, score]
+      properties:
+        error:
+          type: number
+          minimum: 0
+          description: Non-negative difference; units or percentage are defined per criterion.
+        score:
+          type: number
+          minimum: 0
+          maximum: 100
+
+    VectorAssessment:
+      type: object
+      additionalProperties: false
+      required: [error, score]
+      properties:
+        error:
+          $ref: '#/components/schemas/Vector3'
+          description: Absolute component-wise differences in the corresponding unit.
+        score:
+          type: number
+          minimum: 0
+          maximum: 100
+
+    CountAssessment:
+      type: object
+      additionalProperties: false
+      required: [error, score]
+      properties:
+        error:
+          type: integer
+          minimum: 0
+          description: Absolute difference between submitted and expected counts.
+        score:
+          type: number
+          minimum: 0
+          maximum: 100
+
+    FaceTypesAssessment:
+      type: object
+      additionalProperties: false
+      required: [error, score]
+      properties:
+        error:
+          type: object
+          description: Absolute count difference for each surface type; absent types are treated as zero.
+          propertyNames:
+            enum: [plane, cylinder, cone, sphere, torus, other]
+          additionalProperties:
+            type: integer
+            minimum: 0
+        score:
+          type: number
+          minimum: 0
+          maximum: 100
+
+    ErrorResponse:
+      type: object
+      additionalProperties: false
+      required: [error_code, message]
+      properties:
+        error_code:
+          type: string
+          example: VALIDATION_ERROR
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
