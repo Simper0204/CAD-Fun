@@ -1,0 +1,17 @@
+{
+  "question_id": "CAD001",
+  "parameters": {
+    "volume": 1,
+    "surface_area": 2,
+    "center_of_mass": [1, 2, 3], 
+    "bounding_box": [1, 2, 3],
+    "moment_of_inertia": 1,
+    "number_of_solid_bodies": 2,
+    "number_of_solid_faces": 4,
+    "number_of_edges": 8,
+    "face_types": {
+        "plane": 2,
+        "cylinder": 1
+    }
+  }
+}

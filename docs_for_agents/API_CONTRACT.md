@@ -71,19 +71,6 @@ Version 1 conventions:
 
 The question definition must identify the coordinate frame and axis orientation used by its expected values. The frontend and backend must use the same convention.
 
-### Moment of inertia — unresolved
-
-The current example contains a single numeric `moment_of_inertia` value for continuity with the initial project proposal. This is not yet a complete definition for a 3D solid.
-
-Before implementing this criterion, the project lead must choose and document:
-- mass moment of inertia or area moment of inertia;
-- the reference point (for example, center of mass or origin);
-- the axes and whether products of inertia are included;
-- units and density/material assumptions, if mass moment is used;
-- whether the API field is a scalar, vector, or tensor representation.
-
-Until this decision is approved, agents must not implement or silently reinterpret this field. The current OpenAPI field is marked as provisional.
-
 ## 7. Face-type naming
 
 Use consistent lowercase keys. The initial supported names are:

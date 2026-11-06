@@ -6,11 +6,11 @@ These instructions apply to every AI coding agent working in this repository.
 
 Before creating, editing, or refactoring project code, read all six project documents:
 
-1. `docs/API_CONTRACT.md`
-2. `docs/openapi.yaml`
-3. `docs/SCORING_SYSTEM.md`
-4. `docs/examples/frontend_ex_prob_submit.json`
-5. `docs/examples/backend_ex_prob_response.json`
+1. `docs_for_agents/API_CONTRACT.md`
+2. `docs_for_agents/openapi.yaml`
+3. `docs_for_agents/SCORING_SYSTEM.md`
+4. `docs_for_agents/examples/frontend_ex_prob_submit.json`
+5. `docs_for_agents/examples/backend_ex_prob_response.json`
 6. `README.md` (repository root)
 
 Do not rely on an example alone. The OpenAPI specification is authoritative for API structure; the scoring document is authoritative for scoring rules; the API contract explains the intended integration. Examples illustrate those rules.
@@ -87,3 +87,20 @@ When finishing a task, report:
 - Any assumptions, unresolved questions, or deviations from the contract.
 
 If you discover a mismatch between implementation and documentation, stop and report it rather than silently choosing one.
+
+The project uses the following standardized technology stack:
+
+- Frontend: React + TypeScript + Vite
+- Styling: Tailwind CSS
+- Backend: Python + FastAPI
+- Data validation: Pydantic
+- Database: PostgreSQL
+- Database ORM: SQLAlchemy
+- API communication: REST + JSON
+- API specification: OpenAPI
+
+All developers and AI coding agents must use these technologies unless the project lead explicitly approves a change.
+
+Do not introduce alternative frameworks, programming languages, databases, or major dependencies without approval.
+
+Frontend and backend implementations must follow the shared API contract.

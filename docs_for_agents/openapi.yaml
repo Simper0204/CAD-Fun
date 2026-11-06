@@ -36,7 +36,6 @@ paths:
                     surface_area: 80.2
                     center_of_mass: [10.0, 20.0, 30.0]
                     bounding_box: [10.0, 20.0, 30.0]
-                    moment_of_inertia: 1.0
                     number_of_solid_bodies: 1
                     number_of_solid_faces: 6
                     number_of_edges: 12
@@ -67,9 +66,6 @@ paths:
                       bounding_box:
                         error: [1.0, 2.0, 3.0]
                         score: 90.0
-                      moment_of_inertia:
-                        error: 1.0
-                        score: 95.0
                       number_of_solid_bodies:
                         error: 0
                         score: 100.0
@@ -133,7 +129,6 @@ components:
         - surface_area
         - center_of_mass
         - bounding_box
-        - moment_of_inertia
         - number_of_solid_bodies
         - number_of_solid_faces
         - number_of_edges
@@ -153,12 +148,6 @@ components:
         bounding_box:
           $ref: '#/components/schemas/Vector3'
           description: X, Y, Z bounding-box dimensions in mm, in the question-defined axis order.
-        moment_of_inertia:
-          type: number
-          description: >
-            PROVISIONAL PLACEHOLDER. Do not implement or interpret until the
-            project lead approves the physical definition, reference point,
-            axes, units, density assumptions, and representation.
         number_of_solid_bodies:
           type: integer
           minimum: 0
@@ -213,7 +202,6 @@ components:
         - surface_area
         - center_of_mass
         - bounding_box
-        - moment_of_inertia
         - number_of_solid_bodies
         - number_of_solid_faces
         - number_of_edges
@@ -227,8 +215,6 @@ components:
           $ref: '#/components/schemas/VectorAssessment'
         bounding_box:
           $ref: '#/components/schemas/VectorAssessment'
-        moment_of_inertia:
-          $ref: '#/components/schemas/ScalarAssessment'
         number_of_solid_bodies:
           $ref: '#/components/schemas/CountAssessment'
         number_of_solid_faces:

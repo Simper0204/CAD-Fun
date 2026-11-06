@@ -1,0 +1,45 @@
+{
+  "question_id": "CAD001",
+  "assessment": {
+    "volume": {
+      "error": 1.0,
+      "score": 95
+    },
+    "surface_area": {
+      "error": 2.0,
+      "score": 90
+    },
+    "center_of_mass": {
+      "error": [1.0, 2.0, 3.0],
+      "score": 85
+    },
+    "bounding_box": {
+      "error": [1.0, 2.0, 3.0],
+      "score": 90
+    },
+    "moment_of_inertia": {
+      "error": 1.0,
+      "score": 95
+    },
+    "number_of_solid_bodies": {
+      "error": 2,
+      "score": 0
+    },
+    "number_of_solid_faces": {
+      "error": 4,
+      "score": 70
+    },
+    "number_of_edges": {
+      "error": 8,
+      "score": 60
+    },
+    "face_types": {
+      "error": {
+        "plane": 2,
+        "cylinder": 1
+      },
+      "score": 80
+    }
+  },
+  "overall_score": 83
+}

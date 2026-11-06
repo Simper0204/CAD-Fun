@@ -25,10 +25,6 @@
       ],
       "score": 90.0
     },
-    "moment_of_inertia": {
-      "error": 1.0,
-      "score": 95.0
-    },
     "number_of_solid_bodies": {
       "error": 0,
       "score": 100.0
