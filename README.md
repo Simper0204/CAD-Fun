@@ -191,7 +191,7 @@ Only implement the assigned task. Do not expand the scope without approval.
 
 
 
-ver 1.0: how to local host:
+prototype 1.0: how to local host:
 in terminal, paste this to start the backend:
 Set-Location "C:\Users\Admin\Desktop\Self - Learning\FTC\CAD-Fun\backend"
 $env:DATABASE_URL = "sqlite:///C:/Users/Admin/AppData/Local/Temp/cadfun-local.sqlite"
