@@ -186,3 +186,22 @@ When your task is complete, provide a report containing:
 Only implement the assigned task. Do not expand the scope without approval.
 
 **Final principle:** Prioritize compatibility, correctness, and maintainability over implementing features quickly. A working component that integrates properly with the rest of CAD Fun is more valuable than an isolated component with additional features.
+
+
+
+
+
+ver 1.0: how to local host:
+in terminal, paste this to start the backend:
+Set-Location "C:\Users\Admin\Desktop\Self - Learning\FTC\CAD-Fun\backend"
+$env:DATABASE_URL = "sqlite:///C:/Users/Admin/AppData/Local/Temp/cadfun-local.sqlite"
+$env:CORS_ORIGINS = "http://localhost:5173"
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+
+then create new terminal and paste this to start the frontend:
+Set-Location "C:\Users\Admin\Desktop\Self - Learning\FTC\CAD-Fun\frontend"
+npm.cmd run dev
+
+then open http://localhost:5173 on a browser
+
+answer to CAD001 is in questions.json in CAD-Fun.backend.app.seed.questions.json
