@@ -1,0 +1,70 @@
+{
+  "questions": [
+    {
+      "question_id": "CAD001",
+      "title": "Sample block (provisional expected values and tolerances)",
+      "coordinate_frame": "Right-handed frame fixed to the model. The question author owns the origin and axis directions.",
+      "axis_order": "x, y, z",
+      "criteria": {
+        "volume": {
+          "enabled": true,
+          "expected": 125.5,
+          "comparison": "percentage",
+          "tolerance": 5,
+          "weight": 1
+        },
+        "surface_area": {
+          "enabled": true,
+          "expected": 80.2,
+          "comparison": "percentage",
+          "tolerance": 5,
+          "weight": 1
+        },
+        "center_of_mass": {
+          "enabled": true,
+          "expected": [10.0, 20.0, 30.0],
+          "comparison": "vector_max_component",
+          "tolerance": 1,
+          "weight": 1
+        },
+        "bounding_box": {
+          "enabled": true,
+          "expected": [10.0, 20.0, 30.0],
+          "comparison": "vector_max_component",
+          "tolerance": 1,
+          "weight": 1
+        },
+        "number_of_solid_bodies": {
+          "enabled": true,
+          "expected": 1,
+          "comparison": "count_tolerance",
+          "tolerance": 1,
+          "weight": 1
+        },
+        "number_of_solid_faces": {
+          "enabled": true,
+          "expected": 6,
+          "comparison": "count_tolerance",
+          "tolerance": 2,
+          "weight": 1
+        },
+        "number_of_edges": {
+          "enabled": true,
+          "expected": 12,
+          "comparison": "count_tolerance",
+          "tolerance": 2,
+          "weight": 1
+        },
+        "face_types": {
+          "enabled": true,
+          "expected": {
+            "plane": 6
+          },
+          "comparison": "face_types_max",
+          "tolerance": 2,
+          "weight": 1
+        }
+      }
+    }
+  ]
+}
